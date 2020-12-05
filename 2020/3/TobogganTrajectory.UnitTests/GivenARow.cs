@@ -4,10 +4,6 @@ using FluentAssertions;
 
 namespace TobogganTrajectory.UnitTests
 {
-    // public class GivenAGrid
-    // {
-    //     public void
-    // }
     public class GivenARow
     {
         [Theory]

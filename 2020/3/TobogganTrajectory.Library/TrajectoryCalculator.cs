@@ -1,27 +1,29 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace TobogganTrajectory.Library
 {
     public class TrajectoryCalculator
     {
-        public int CountTrees(string[] rows, (int, int) offset)
+        public int CountTrees(string[] rows, (int right, int down) offset)
         {
             int columnPosition = 0;
-            int count = 0;
 
-            var (right, down) = offset;
-            
-            for(int j = 0 ; j < rows.Length ; j+=down)
+            int isCollision((int length, int[] positions) row)
             {
-                var treePositions = LineScanner.Scan(rows[j]);
+                bool collision = LineScanner.IsTree(row.positions, columnPosition, row.length);
 
-                if (LineScanner.IsTree(treePositions, columnPosition, rows[j].Length))
-                    count++;
+                columnPosition+=offset.right;
 
-                columnPosition+=right;
+                return collision ? 1 : 0;
             }
 
-            return count;
+            return rows
+                    .Where((value, index) => index % offset.down == 0)
+                    .Select(GetCollisions)
+                    .Aggregate(0, (total, next) => total + isCollision(next));
         }
+
+        private (int, int[]) GetCollisions(string row)  => ( row.Length, LineScanner.Scan(row));
     }
 }
