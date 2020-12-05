@@ -9,6 +9,8 @@ namespace TobogganTrajectory.Library
         {
             int columnPosition = 0;
 
+            bool skipRows(string row, int index) => index % offset.down == 0;
+
             int isCollision((int length, int[] positions) row)
             {
                 bool collision = LineScanner.IsTree(row.positions, columnPosition, row.length);
@@ -19,11 +21,11 @@ namespace TobogganTrajectory.Library
             }
 
             return rows
-                    .Where((value, index) => index % offset.down == 0)
-                    .Select(GetCollisions)
+                    .Where(skipRows)
+                    .Select(getCollisions)
                     .Aggregate(0, (total, next) => total + isCollision(next));
         }
 
-        private (int, int[]) GetCollisions(string row)  => ( row.Length, LineScanner.Scan(row));
+        private (int, int[]) getCollisions(string row)  => ( row.Length, LineScanner.Scan(row));
     }
 }
