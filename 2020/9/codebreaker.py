@@ -1,5 +1,19 @@
 import numpy as np
 
+def findContiguousBlock(numbers, total):
+    for i in np.arange(0, len(numbers)):
+        j = i+1
+        running_total = numbers[i]
+
+        smallest = numbers
+        while running_total < total:
+            running_total += numbers[j]
+            if (running_total == total):
+                smallest = np.argmin(numbers[i:j])
+                largest = np.argmax(numbers[i:j])
+                return numbers[i+smallest] + numbers[i+largest]
+            j += 1
+    return 0
 
 def firstElementNotSumOfTwoPreviousElements(numbers, preamble_length):
     for i in np.arange(preamble_length, len(numbers)):

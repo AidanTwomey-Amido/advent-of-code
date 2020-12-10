@@ -22,6 +22,9 @@ def test_element_is_not_sum_of_two_previous_elements():
 def test_firest_element_that_is_sum_of_two_previous_elements():
     assert decrypt_module.firstElementNotSumOfTwoPreviousElements(numbers, 5) == 127
 
+def test_contiguous_block_sums_to_first_and_last_elements():
+    assert decrypt_module.findContiguousBlock(numbers, 127) == 62
+
 #
 # goodCredentials = [
 #     "ecl:gry pid:860033327 eyr:2020 hcl:#fffffd byr:1937 iyr:2017 cid:147 hgt:183cm",
